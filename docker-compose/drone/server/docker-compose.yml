@@ -1,0 +1,23 @@
+version: '3.4'
+services: 
+  drone-server:
+    image: drone/drone:1
+    container_name: drone-server
+    restart: always
+    ports: 
+      - 9001:80
+    volumes: 
+      - /data/drone-server:/data
+    environment: 
+      DRONE_SERVER_HOST: ${DRONE_SERVER_HOST}
+      DRONE_SERVER_PROTO: ${DRONE_SERVER_PROTO}
+      DRONE_RPC_SECRET: ${DRONE_RPC_SECRET}
+      DRONE_AGENTS_ENABLED: 'true'
+      DRONE_GOGS_SERVER: ${DRONE_GOGS_SERVER}
+      DRONE_GIT_ALWAYS_AUTH: 'true'
+    networks: 
+      - devops-network
+
+networks: 
+  devops-network:
+    external: true      
