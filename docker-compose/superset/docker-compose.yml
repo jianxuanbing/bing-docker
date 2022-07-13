@@ -1,0 +1,16 @@
+x-superset-image: &superset-image amancevice/superset:1.0.1
+version: '3.4'
+services: 
+  superset:
+    image: *superset-image
+    container_name: superset
+    restart: always
+    ports: 
+      - 11002:8088
+    env_file: docker/.env
+    networks: 
+      - devops-network
+
+networks: 
+  devops-network:
+    external: true
