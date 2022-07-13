@@ -1,0 +1,29 @@
+version: '3.4'
+services: 
+  mysql:
+    image: mysql:8.0.16
+    container_name: mysql
+    restart: always
+    ports: 
+      - 3306:3306
+    environment: 
+      MYSQL_ROOT_PASSWORD: 123456 # root管理员用户密码
+      MYSQL_USER: bing # 创建bing用户
+      MYSQL_PASSWORD: 123456 # 设置bing用户密码
+      MYSQL_ROOT_HOST: '%'
+      TIMEZONE: Asis/Shanghai
+    volumes: 
+      - /data/mysql/data:/var/lib/mysql
+      - /data/mysql/conf:/etc/mysql/conf.d
+      - /etc/localtime:/etc/localtime:ro
+      - ./conf/my.cnf:/etc/mysql/conf.d/my.cnf
+    networks: 
+      - devops-network
+
+networks: 
+  devops-network:
+    name: devops-network
+    driver: bridge
+    ipam:
+      config: 
+      - subnet: 172.26.0.0/16
