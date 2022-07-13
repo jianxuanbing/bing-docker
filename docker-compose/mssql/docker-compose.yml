@@ -1,0 +1,25 @@
+version: '3'
+services: 
+  sqlserver:
+    image: justin2004/mssql_server_tiny
+    container_name: sqlserver
+    ports: 
+      - 21433:1433
+    restart: always
+    environment: 
+      ACCEPT_EULA: Y
+      SA_PASSWORD: Bing2019.00
+    volumes: 
+      - /data/mssql:/var/opt/mssql/data
+    networks: 
+      - devops-network
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 512M
+
+networks: 
+  devops-network:
+    external: true
