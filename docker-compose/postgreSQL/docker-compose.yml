@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   postgres:
-    image: library/postgres:9.5
+    image: postgres:9.5
     container_name: pgsql
     restart: always
     ports: 
