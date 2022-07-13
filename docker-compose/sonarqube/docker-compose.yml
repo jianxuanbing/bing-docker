@@ -1,0 +1,22 @@
+version: '3.4'
+services: 
+  sonarqube:
+    image: sonarqube
+    container_name: sonarqube
+    restart: always
+    ports: 
+      - 9003:9000
+    volumes: 
+      - /data/sonquebe/conf:/opt/sonarqube/conf
+      - /data/sonquebe/data:/opt/sonarqube/data
+      - /data/sonquebe/plugins:/opt/sonarqube/extensions/plugins
+    environment: 
+      SONARQUBE_JDBC_USERNAME: admin
+      SONARQUBE_JDBC_PASSWORD: "123456"
+      SONARQUBE_JDBC_URL: jdbc:postgresql://0.0.0.0:5432/sonar
+    networks: 
+      - devops-network
+
+networks: 
+  devops-network:
+    external: true
