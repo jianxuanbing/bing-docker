@@ -1,0 +1,28 @@
+version: '3.4'
+services: 
+  rabbitmq:
+    image: library/rabbitmq:management
+    container_name: rabbitmq
+    restart: always
+    ports: 
+      - 5672:5672
+      - 15672:15672
+    environment: 
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: 123456
+      RABBITMQ_DEFAULT_VHOST: /
+    volumes:       
+      - /data/rabbitmq/data:/var/lib/rabbitmq/
+      - /data/rabbitmq/logs:/var/log/rabbitmq/
+      - /etc/localtime:/etc/localtime:ro
+    logging: 
+      driver: "json-file"
+      options: 
+        max-size: "200k"
+        max-file: "10"
+    networks: 
+      - devops-network
+
+networks: 
+  devops-network:
+    external: true
