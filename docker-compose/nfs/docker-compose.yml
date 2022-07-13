@@ -1,0 +1,21 @@
+version: '3.4'
+services:
+  nfs-server:
+    image: gists/nfs-server:2.5.2
+    container_name: nfs-server
+    restart: always
+    ports:
+      - 2049:2049
+    cap_add:
+      - SYS_ADMIN
+      - SETPCAP
+    environment:
+      NFS_OPTION: 'rw,async,insecure,no_root_squash,no_all_squash,no_subtree_check,fsid=0'
+    volumes:
+      - /data/nfs-server:/nfs-share
+    networks: 
+      - devops-network
+
+networks: 
+  devops-network:
+    external: true
