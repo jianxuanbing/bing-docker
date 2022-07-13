@@ -1,0 +1,19 @@
+version: '3.4'
+services: 
+  jumpserver:
+    image: jumpserver/jms_all:v2.11.1
+    container_name: jumpserver
+    restart: always
+    privileged: true
+    ports: 
+      - 9810:80
+      - 2222:2222
+    env_file: ./env/jumpserver.env
+    volumes: 
+      - /data/jumpserver/data:/opt/jumpserver/data
+    networks: 
+      - devops-network
+
+networks: 
+  devops-network:
+    external: true
