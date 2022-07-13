@@ -1,0 +1,20 @@
+version: '3.4'
+services: 
+  influxdb:
+    image: influxdb:1.8.1
+    container_name: influxdb
+    restart: always
+    privileged: true
+    ports: 
+      - 8086:8086
+    volumes: 
+      - ./etc:/etc/influxdb
+      - /data/influxdb/data:/var/lib/influxdb
+    env_file: 
+      - ./influxdb.env
+    networks:
+      - devops-network
+
+networks: 
+  devops-network:
+    external: true
