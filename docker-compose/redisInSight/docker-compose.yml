@@ -1,0 +1,20 @@
+version: '3.4'
+services:
+  redisinsight:
+    image: redislabs/redisinsight:1.10.1
+    container_name: redisinsight
+    restart: always
+    ports:
+      - 9001:8001
+    volumes:
+      - /data/redisinsight:/db
+    networks: 
+      - devops-network
+
+networks: 
+  devops-network:
+    name: devops-network
+    driver: bridge
+    ipam:
+      config: 
+      - subnet: 172.26.0.0/16
