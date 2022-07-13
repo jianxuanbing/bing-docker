@@ -1,0 +1,23 @@
+version: '3.4'
+services:
+  spug:
+    image: openspug/spug:3.0.4
+    container_name: spug
+    restart: always
+    ports:
+      - 9527:80
+      - 9528:3306 # 公开内置mysql
+    volumes:
+      - /data/spug:/data
+      - /var/run/docker.sock:/var/run/docker.sock # 挂载本地Docker
+      - /usr/bin/docker:/usr/bin/docker
+    networks:
+      - devops-network
+
+networks: 
+  devops-network:
+    name: devops-network
+    driver: bridge
+    ipam:
+      config: 
+      - subnet: 172.22.0.0/16
