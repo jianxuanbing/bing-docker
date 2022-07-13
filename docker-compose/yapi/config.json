@@ -1,0 +1,24 @@
+{
+  "port": "3000",
+  "adminAccount": "admin@admin.com",
+  "versionNotify": true,
+  "closeRegister": false,
+  "db": {
+    "servername": "172.17.0.1",
+    "DATABASE": "yapiDb",
+    "port": 27017,
+    "user": "bing",
+    "pass": "123456",
+    "authSource": "yapiDb"
+  },
+  "mail": {
+    "enable": false,
+    "host": "smtp.163.com",
+    "port": 465,
+    "from": "***@163.com",
+    "auth": {
+      "user": "***@163.com",
+      "pass": "*****"
+    }
+  }
+}

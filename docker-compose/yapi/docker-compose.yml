@@ -1,0 +1,15 @@
+version: '3'
+services: 
+  yapi:
+    build: 
+      context: .
+    image: yapi
+    container_name: yapi
+    ports: 
+      - 9800:3000
+    volumes: 
+      - /data/yapi/log:/api/vendors/log
+      - ./docker-entrypoint.sh:/api/docker-entrypoint.sh
+      - ./config.json:/api/config.json
+    environment: 
+      HOME: /api
