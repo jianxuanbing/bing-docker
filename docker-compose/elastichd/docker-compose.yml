@@ -1,0 +1,14 @@
+version: '3.4'
+services:
+  elastichd:
+    image: containerize/elastichd:latest
+    container_name: elastichd
+    restart: always
+    ports: 
+      - 9800:9800
+    networks: 
+      - devops-network
+
+networks: 
+  devops-network:
+    external: true
