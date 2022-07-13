@@ -1,0 +1,24 @@
+version: '3.4'
+services:
+  nexus3:
+    image: sonatype/nexus3:3.31.1
+    container_name: nexus3
+    privileged: true
+    ports: 
+      - 9001:8081
+    restart: always
+    environment: 
+      INSTALL4J_ADD_VM_PARAMS: "-Xms4g -Xmx4g -XX:MaxDirectMemorySize=6717M"
+    volumes: 
+      - /data/nexus3/data:/nexus-data
+      - /etc/localtime:/etc/localtime
+    networks: 
+      - devops-network
+
+networks: 
+  devops-network:
+    name: devops-network
+    driver: bridge
+    ipam:
+      config: 
+      - subnet: 172.26.0.0/16
