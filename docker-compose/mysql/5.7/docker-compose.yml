@@ -1,0 +1,26 @@
+version: '3.4'
+services: 
+  mysql:
+    image: mysql:5.7.25
+    container_name: mysql
+    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_general_ci] # 设置utf8字符集
+    restart: always
+    ports: 
+      - 3306:3306
+    environment: 
+      MYSQL_ROOT_PASSWORD: 123456 # root管理员用户密码
+      MYSQL_USER: bing # 创建bing用户
+      MYSQL_PASSWORD: 123456 # 设置bing用户密码
+      MYSQL_ROOT_HOST: '%'
+      TIMEZONE: Asis/Shanghai
+    volumes: 
+      - /data/mysql/data:/var/lib/mysql
+      - /data/mysql/conf:/etc/mysql/conf.d
+      - /etc/localtime:/etc/localtime:ro
+      - ./conf/my.cnf:/etc/mysql/conf.d/my.cnf
+    networks: 
+      - devops-network
+
+networks: 
+  devops-network:
+    external: true
