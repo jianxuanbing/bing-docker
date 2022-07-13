@@ -1,0 +1,17 @@
+version: '3.4'
+services: 
+  mrdoc:
+    image: jonnyan404/mrdoc-nginx
+    container_name: mrdoc
+    restart: always
+    ports: 
+      - 10086:10086
+    volumes: 
+      - ./config:/app/MrDoc/config
+      - /data/MrDoc/media:/app/MrDoc/media
+    networks: 
+      - devops-network
+
+networks: 
+  devops-network:
+    external: true
