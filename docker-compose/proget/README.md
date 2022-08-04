@@ -15,3 +15,6 @@ ProGet 可以用过 Docker 在 Linux 服务器上运行。
 ## 账号
 默认账号密码：Admin
 
+# 注意事项
+- 需要注意赋予 `volumes` 访问权限。
+> chmod 777 -R /data/proget
