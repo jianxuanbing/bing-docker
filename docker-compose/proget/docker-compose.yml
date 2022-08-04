@@ -1,0 +1,30 @@
+version: '3.4'
+services: 
+  proget:
+    image: inedo/proget:5.2.27
+    container_name: proget
+    restart: always
+    ports: 
+      - 5555:80
+    env_file: ./env/proget.env
+    volumes: 
+      - /data/proget/packages:/var/proget/packages
+      - /data/proget/extensions:/var/proget/extensions
+      - /etc/localtime:/etc/localtime:ro
+    networks: 
+      - devops-network
+  
+  proget_db:
+    image: postgres:9.5
+    container_name: proget_db_pgsql
+    restart: always
+    env_file: ./env/proget_db.env
+    volumes:
+      - /data/proget_db:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - devops-network
+
+networks: 
+  devops-network:
+    external: true
