@@ -3,7 +3,7 @@ services:
   yapi:
     build: 
       context: .
-    image: yapi
+    image: yapi:1.12.0
     container_name: yapi
     ports: 
       - 9800:3000

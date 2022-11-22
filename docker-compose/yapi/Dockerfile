@@ -1,22 +1,44 @@
-FROM alpine:latest as builder
-ENV YAPI_VERSION=1.9.1
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+######## 构建 ########
+FROM node:12.16.3-alpine3.11 as builder
 
-RUN apk update \
-    && apk add --no-cache git nodejs npm  bash vim  python python-dev gcc libcurl make \
-    && rm -rf /var/cache/apk/* \
-    && mkdir /yapi && cd /yapi && git clone -b "v${YAPI_VERSION}" --single-branch --depth 1 https://gitee.com/mirrors/YApi.git vendors \
-    && npm install -g node-gyp yapi-cli npm@latest --registry https://registry.npm.taobao.org \
-    && cd /yapi/vendors && npm i --production --registry https://registry.npm.taobao.org
+# 安装构建工具
+RUN apk add --update --no-cache ca-certificates curl wget cmake build-base git bash python make gcc g++ zlib-dev autoconf automake file nasm \
+  && update-ca-certificates
 
-FROM node:11-alpine
+# YAPI 版本
+ENV YAPI_VERSION=1.12.0
+
+# 拉取 YAPI 源码 git clone --branch "v1.12.0" --single-branch --depth 1 https://gitee.com/mirrors/YApi.git
+RUN mkdir /yapi && cd /yapi \
+    && git clone \
+    --branch "v${YAPI_VERSION}" \
+    --single-branch \
+    --depth 1 \
+    https://gitee.com/mirrors/YApi.git vendors
+
+# 安装依赖
+RUN cd /yapi/vendors \
+    # && rm package-lock.json \
+    && npm install --production --registry https://registry.npm.taobao.org
+    # && yarn
+
+######## 镜像 ########
+FROM node:12.16.3-alpine3.11
+
 LABEL MAINTAINER = 'jianxaunbing(https://github.com/jianxuanbing)'
+
 ENV TZ="Asia/Shanghai" HOME="/"
+
 WORKDIR ${HOME}
 
 COPY --from=builder /yapi/vendors /api/vendors
-COPY config.json /api/
-EXPOSE 3000
+
+COPY --from=builder /yapi/vendors/config_example.json /api/config.json
+
 COPY docker-entrypoint.sh /api/
+
+EXPOSE 3000
+
 RUN chmod 755 /api/docker-entrypoint.sh
+
 ENTRYPOINT ["/api/docker-entrypoint.sh"]
