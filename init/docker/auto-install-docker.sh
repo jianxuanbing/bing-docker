@@ -144,6 +144,13 @@ chmod +x /usr/local/bin/docker-compose
 echo 'docker-compose安装成功...'
 docker-compose --version
 
+echo "安装bash-completion..."
+yum install -y bash-completion
+
+echo "复制命令补全文件"
+cp ./bash-completion/docker.sh /etc/bash_completion.d/docker.sh
+cp ./bash-completion/docker-compose.sh /etc/bash_completion.d/docker-compose.sh
+
 echo '创建docker用户组'
 groupadd docker
 
