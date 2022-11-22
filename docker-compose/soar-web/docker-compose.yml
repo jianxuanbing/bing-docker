@@ -1,0 +1,14 @@
+version: '3.4'
+services: 
+  soar-web:
+    image: becivells/soar-web:latest
+    container_name: soar-web
+    restart: always
+    ports: 
+      - 5077:5077
+    networks: 
+      - devops-network
+
+networks: 
+  devops-network:
+    external: true
