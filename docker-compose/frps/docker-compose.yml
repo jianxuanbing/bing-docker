@@ -1,0 +1,10 @@
+version: '3.4'
+services: 
+  frps:
+    image: snowdreamtech/frps:0.35.1
+    container_name: frps
+    restart: always
+    pid: "host"
+    network_mode: "host"
+    volumes: 
+      - ./config/frps.ini:/etc/frp/frps.ini
